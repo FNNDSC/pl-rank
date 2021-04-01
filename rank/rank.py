@@ -9,6 +9,8 @@
 #
 
 from chrisapp.base import ChrisApp
+import os
+import json
 
 
 Gstr_title = r"""
@@ -120,6 +122,24 @@ class Rank(ChrisApp):
         """
         Define the code to be run by this plugin app.
         """
+        files = os.listdir(options.inputdir)
+        severity_files = []
+        for f in files:
+            if "severity" in f:
+                if "._" not in f:
+                    severity_files.append(f)
+
+        patients_severity = {}
+        for file in severity_files:
+            with open(options.inputdir + "/" + file) as f:
+                temp = json.load(f)
+            patients_severity[file] = int(temp["Geographic severity"]) + int(temp["Opacity severity"])
+
+        patients_severity_sorted = sorted(patients_severity.items(), key=lambda x: x[1])  
+
+        with open(options.outputdir + "/ranking_result.txt", "w") as f:
+            for p in patients_severity_sorted.keys():
+                f.write(p + ": " + patients_severity_sorted[p])
         print(Gstr_title)
         print('Version: %s' % self.get_version())
 
