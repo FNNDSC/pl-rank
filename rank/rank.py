@@ -138,8 +138,8 @@ class Rank(ChrisApp):
         patients_severity_sorted = sorted(patients_severity.items(), key=lambda x: x[1])  
 
         with open(options.outputdir + "/ranking_result.txt", "w") as f:
-            for p in patients_severity_sorted.keys():
-                f.write(p + ": " + patients_severity_sorted[p])
+            for p in patients_severity_sorted:
+                f.write(p + ": " + patients_severity[p])
         print(Gstr_title)
         print('Version: %s' % self.get_version())
 
