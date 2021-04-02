@@ -134,7 +134,7 @@ class Rank(ChrisApp):
             with open(options.inputdir + "/" + file) as f:
                 temp = json.load(f)
             with open(options.outputdir + "/" + file, "w") as f:
-                json.dump(temp, f)
+                json.dump(temp, f,indent=6)
             patients_severity[file] = int(temp["Geographic severity"]) + int(temp["Opacity severity"])
 
         patients_severity_sorted = sorted(patients_severity.items(), key=lambda x: x[1])  
