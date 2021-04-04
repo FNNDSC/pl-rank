@@ -11,6 +11,7 @@
 from chrisapp.base import ChrisApp
 import os
 import json
+from collections import OrderedDict
 
 
 Gstr_title = r"""
@@ -122,25 +123,39 @@ class Rank(ChrisApp):
         """
         Define the code to be run by this plugin app.
         """
-        files = os.listdir(options.inputdir)
+        folders = os.listdir(options.inputdir)
         severity_files = []
-        for f in files:
-            if "severity" in f:
-                if "._" not in f:
-                    severity_files.append(f)
+        safe_files = []
+        # print(folders)
+        for folder in folders:
+            if '.' not in folder:
+                files = os.listdir(options.inputdir + "/" + folder)
+            else:
+                continue
+            issafe = 1
+            for f in files:
+                if "severity" in f:
+                    if "._" not in f:
+                        issafe = 0
+                        severity_files.append(folder + '/' + f)
+            if issafe:
+                safe_files.append(folder)
+
 
         patients_severity = {}
         for file in severity_files:
             with open(options.inputdir + "/" + file) as f:
                 temp = json.load(f)
-            with open(options.outputdir + "/" + file, "w") as f:
+            with open(options.outputdir + "/" + file.replace('/', '_'), "w") as f:
                 json.dump(temp, f,indent=6)
             patients_severity[file] = int(temp["Geographic severity"]) + int(temp["Opacity severity"])
 
-        patients_severity_sorted = sorted(patients_severity.items(), key=lambda x: x[1], reverse=True)  
+        patients_severity_sorted = OrderedDict(sorted(patients_severity.items(), key=lambda x: x[1], reverse=True))
 
+        patients_severity_sorted["safe patients"] = safe_files
+        print(patients_severity_sorted)
         with open(options.outputdir + "/ranking_result.json", "w") as f:
-            json.dump(patients_severity_sorted, f)   
+            json.dump(patients_severity_sorted, f, indent=6)   
         print(Gstr_title)
         print('Version: %s' % self.get_version())
 
