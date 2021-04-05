@@ -152,7 +152,7 @@ class Rank(ChrisApp):
 
         patients_severity_sorted = OrderedDict(sorted(patients_severity.items(), key=lambda x: x[1], reverse=True))
 
-        patients_severity_sorted["safe patients"] = safe_files
+        patients_severity_sorted["covid_free patients"] = safe_files
         print(patients_severity_sorted)
         with open(options.outputdir + "/ranking_result.json", "w") as f:
             json.dump(patients_severity_sorted, f, indent=6)   
