@@ -83,7 +83,7 @@ You need to specify input and output directories using the `-v` flag to `docker 
 
     docker run --rm -u $(id -u)                             \
         -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
-        fnndsc/pl-rank rank                        \
+        zongxinc/pl-rank rank                        \
         /incoming /outgoing
 
 
@@ -94,13 +94,13 @@ Build the Docker container:
 
 .. code:: bash
 
-    docker build -t local/pl-rank .
+    docker build -t zongxinc/pl-rank .
 
 Run unit tests:
 
 .. code:: bash
 
-    docker run --rm local/pl-rank nosetests
+    docker run --rm zongxinc/pl-rank nosetests
 
 Examples
 --------
