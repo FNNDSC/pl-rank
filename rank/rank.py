@@ -194,7 +194,7 @@ class Rank(ChrisApp):
         # clear outpath 
         os.system('rm -rf %s/*' % options.outputdir)
         # output
-        with open(options.outputdir + "/0-ranking_result.json", "w") as f:
+        with open(options.outputdir + "/0000-ranking_result.json", "w") as f:
             json.dump(ranking,f,indent=6)
         import shutil 
         counter=0
@@ -204,7 +204,7 @@ class Rank(ChrisApp):
             # src = 'options.inputdir/'+ patient['instance_id']
             # dest= 'options.outputdir/'+str(counter)+'/'+patient['instance_id']
             src = os.path.join(options.inputdir, patient['instance_id']) 
-            dest= os.path.join(options.outputdir, '%d-%s' % (counter, patient['instance_id'])) 
+            dest= os.path.join(options.outputdir, '%04d-%s' % (counter, patient['instance_id'])) 
             shutil.copytree(src, dest)
     def show_man_page(self):
         """
