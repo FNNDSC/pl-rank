@@ -8,3 +8,6 @@ htmlcov
 .docker
 .idea/
 .vscode/
+out/*/*
+out/*.json
+
