@@ -17,13 +17,13 @@ pl-rank
 Abstract
 --------
 
-An app to ...
-
+Rank patients in terms of Covid severity
 
 Description
 -----------
 
-``rank`` is a ChRIS-based application that...
+Rank the output of pl-topologicalcopy when it collects the output of multiple pl-covidnet instances used in a
+workflow to analysis multiple DCMs of suspected Covid patients.
 
 
 Usage
